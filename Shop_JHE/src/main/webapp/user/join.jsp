@@ -8,7 +8,7 @@
 	<jsp:include page="/layout/meta.jsp" /> <jsp:include page="/layout/link.jsp" />
 </head>
 <body>   
-	
+	<% String root = request.getContextPath(); %>
 	<jsp:include page="/layout/header.jsp" />
 	<div class="px-4 py-5 mt-5 text-center">
 		<h1 class="display-5 fw-bold text-body-emphasis">회원 가입</h1>
@@ -16,7 +16,7 @@
 	
 	<!-- 회원 가입 영역 -->
 	<div class="container shop p-5 mb-5" >
-		<form action="join_pro.jsp" name="joinForm" method="post" >
+		<form action="join_pro.jsp" onsubmit="return checkJoin()" name="joinForm" method="post" >
 		
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-4" id="">아이디</label>
@@ -132,7 +132,7 @@
 			
 			
 			<div class="d-grid gap-2 mt-5 mb-5 d-md-flex justify-content-md-between">
-				<a href="javascript: history.back()" class="btn btn-lg btn-secondary">취소</a>
+				<a href="<%= root %>" class="btn btn-lg btn-secondary">취소</a>
 				<input type="submit" class="btn btn-lg btn-primary" value="가입" />
 			</div>	
 			
@@ -140,8 +140,38 @@
 		</form>
 	
 	</div>
-	
-	
+	<script>
+	function checkJoin() {
+		let form = document.joinForm
+			
+		let id = form.id
+		let pw = form.pw
+		let pwConfirm = form.pw_confirm
+		let name = form.name
+		
+		let msg = ''
+		
+		
+		let idCheck = /^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣][a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣]+$/
+		msg = '아이디는 영문자 또는 한글로 시작합니다.'
+		if (!check(idCheck, id, msg)) return false
+		
+		let pwCheck = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=]).{6,}$/
+		msg = '비밀번호는 특수문자가 1개 이상 포함, 글자수가 6자 이상이어야 합니다.'
+		if (!check(pwCheck, pw, msg)) return false
+		
+		if (pw.value != pwConfirm.value) {
+			alert('비밀번호가 일치하지 않습니다.')
+			return false
+		} 
+		
+		let nameCheck = /^[가-힣]{2,}$/
+		msg = '이름은 한글만 입력 가능합니다.'
+		if (!check(nameCheck, name, msg)) return false
+		
+		return true
+	}
+	</script>
 	<jsp:include page="/layout/footer.jsp" />
 	<jsp:include page="/layout/script.jsp" />
 </body>

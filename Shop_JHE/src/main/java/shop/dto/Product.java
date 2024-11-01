@@ -12,11 +12,13 @@ import java.io.Serializable;
  * - 분류
  * - 재고 수
  * - 상태(condition)
+ * - 수량
  */
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+
 	private String productId;		// 상품ID
 	private String name;			// 상품명
 	private Integer unitPrice;		// 가격(단가)
@@ -32,6 +34,7 @@ public class Product implements Serializable {
 	private String userId;			// 회원ID
 	private int orderNo;			// 주문번호
 	private String type;			// 입출고 타입
+	private int amount;				// 수량
 	
 	public Product() {
 		
@@ -43,6 +46,13 @@ public class Product implements Serializable {
 		this.unitPrice = unitPrice;
 	}
 
+	public int getAmount() {
+		return amount;
+	}
+	
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
 	public String getProductId() {
 		return productId;
 	}
@@ -152,8 +162,10 @@ public class Product implements Serializable {
 		return "Product [productId=" + productId + ", name=" + name + ", unitPrice=" + unitPrice + ", description="
 				+ description + ", manufacturer=" + manufacturer + ", category=" + category + ", unitsInStock="
 				+ unitsInStock + ", condition=" + condition + ", file=" + file + ", quantity=" + quantity + ", userId="
-				+ userId + ", orderNo=" + orderNo + ", type=" + type + "]";
+				+ userId + ", orderNo=" + orderNo + ", type=" + type + ", amount=" + amount + "]";
 	}
+
+	
 	
 
 }

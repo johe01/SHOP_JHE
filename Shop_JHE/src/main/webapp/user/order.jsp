@@ -15,15 +15,28 @@
 </head>
 <body>   
 	<% 
-	String root = request.getContextPath();	
+		String root = request.getContextPath();	
 		// ...
-	
-	
+		String loginId = (String) session.getAttribute("loginId");
+		
+		boolean login = false;
+		if( loginId != null && !loginId.isEmpty() ) {
+			// response.sendRedirect(root);
+			login = true;
+		}
+		List<Product> orderList;
 		// 주문 내역 목록을 세션에서 가져오기
+		List<Product> orderPhone = (List<Product>)session.getAttribute("orderList");
 		
 		// 회원인 경우
-		
-		
+		if(login){
+			OrderRepository orderDAO = new OrderRepository();
+			orderList = orderDAO.list(loginId);
+		}
+		else {
+			orderList = orderPhone;
+		}
+		int orderCount = orderList.size();
 	%>
 	
 	<jsp:include page="/layout/header.jsp" />

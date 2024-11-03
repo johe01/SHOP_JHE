@@ -8,7 +8,12 @@
 	<jsp:include page="/layout/meta.jsp" /> <jsp:include page="/layout/link.jsp" />
 </head>
 <body>   
-	<% String root = request.getContextPath(); %>
+	<% 
+		String root = request.getContextPath();
+		String loginId = (String) session.getAttribute("loginId");
+		String smsg = request.getParameter("msg");
+		int msg = Integer.parseInt(smsg);
+	%>
 	
 	<jsp:include page="/layout/header.jsp" />
 	<div class="px-4 py-5 my-5 text-center">
@@ -16,8 +21,25 @@
 		
 	</div>
 	<!-- 회원 가입/수정/탈퇴 완료 -->
-	<div class="container mb-5">
-		
+	<div class="container mb-5 text-center">
+	<%
+		if(msg==1) {
+	%>
+		<div class="fs-2 pb-5">회원 가입이 완료되었습니다.</div>
+	<%
+		} else if(msg==0) {
+		%>
+		<div class="fs-2 pb-5"><%= loginId %>님 환영 합니다.</div>		
+		<%
+	} else if(msg==2) {
+	%>
+		<div class="fs-2 pb-5">회원 정보가 수정되었습니다.</div>		
+	<%
+	} else if(msg==3) {
+	%>
+		<div class="fs-2 pb-5">회원 정보가 삭제되었습니다.</div>		
+	<%} %>
+		<a class="btn btn-primary" href="<%= root %>" role="button">메인 화면</a>
 	</div>
 	
 	<jsp:include page="/layout/footer.jsp" />

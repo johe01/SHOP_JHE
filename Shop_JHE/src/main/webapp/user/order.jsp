@@ -24,19 +24,22 @@
 			// response.sendRedirect(root);
 			login = true;
 		}
-		List<Product> orderList;
+		List<Product> orderList= new ArrayList<Product>();
+		int orderCount=0;
 		// 주문 내역 목록을 세션에서 가져오기
-		List<Product> orderPhone = (List<Product>)session.getAttribute("orderList");
-		
+		String orderPhone = (String) session.getAttribute("orderPhone");	
+		orderList = (List<Product>)session.getAttribute("orderList");
+		if (orderList == null) {
+			orderList = new ArrayList<>(); // 빈 리스트로 초기화하여 NullPointerException 방지
+		}
 		// 회원인 경우
 		if(login){
 			OrderRepository orderDAO = new OrderRepository();
 			orderList = orderDAO.list(loginId);
-		}
-		else {
-			orderList = orderPhone;
-		}
-		int orderCount = orderList.size();
+		} 
+		
+		orderCount = orderList.size();
+
 	%>
 	
 	<jsp:include page="/layout/header.jsp" />
@@ -122,14 +125,14 @@
 							int sum = 0;
 							for(int i = 0 ; i < orderCount ; i++) {
 								Product product = orderList.get(i);
-								int total = product.getUnitPrice() * product.getQuantity();
+								int total = product.getUnitPrice() * product.getAmount();
 								sum += total;
 						%>
 						<tr>
 							<td><%= product.getOrderNo() %></td>			
 							<td><%= product.getName() %></td>			
 							<td><%= product.getUnitPrice() %></td>			
-							<td><%= product.getQuantity() %></td>			
+							<td><%= product.getAmount() %></td>			
 							<td><%= total %></td>			
 							<td></td>			
 						</tr>

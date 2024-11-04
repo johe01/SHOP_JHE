@@ -73,7 +73,7 @@ public class OrderRepository extends JDBConnection {
 		List<Product> productList = new ArrayList<Product>();
 		
 		String sql = "SELECT o.order_no, p.name, p.unit_price, io.amount "
-				+ " FROM 'order' o JOIN product_io io ON o.order_no = io.order_no"
+				+ " FROM `order` o JOIN product_io io ON o.order_no = io.order_no"
 				+ " JOIN product p ON io.product_id = p.product_id "
 				+ " WHERE o.user_id = ?";
 		try {
@@ -106,13 +106,14 @@ public class OrderRepository extends JDBConnection {
 	public List<Product> list(String phone, String orderPw) {
 		List<Product> productList = new ArrayList<Product>();
 		
-		String sql = "SELECT o.order_no, p.name, p.unit_price, io.amount "
-				+ " FROM 'order' o JOIN product_io io ON o.order_no = io.order_no"
-				+ " JOIN product p ON io.product_id = p.product_id "
-				+ " WHERE o.phone = ? AND o.order_pw = ?";
+		String sql = "SELECT o.order_no, p.name, p.unit_price, io.amount"
+		           + " FROM `order` o JOIN product_io io ON o.order_no = io.order_no"
+		           + " JOIN product p ON io.product_id = p.product_id "
+		           + " WHERE o.phone = ? AND o.order_pw = ?";
 		try {
 			psmt= con.prepareStatement(sql);
 			psmt.setString(1, phone);
+			psmt.setString(2, orderPw);
 			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
@@ -121,7 +122,7 @@ public class OrderRepository extends JDBConnection {
 				product.setName(rs.getString("p.name"));
 				product.setUnitPrice(rs.getInt("p.unit_price"));
 				product.setAmount(rs.getInt("io.amount"));	
-				
+				System.out.println(product);
 				productList.add(product);
 			}
 		} catch (SQLException e) {

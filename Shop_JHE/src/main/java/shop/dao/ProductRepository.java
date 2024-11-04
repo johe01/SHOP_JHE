@@ -54,7 +54,7 @@ public class ProductRepository extends JDBConnection {
 		List<Product> productList = new ArrayList<Product>();
 		
 		String sql = " SELECT * FROM product "
-				   + " WHERE name LIKE ? OR description LIKE ? OR category LIKE ? ";
+				   + " WHERE name LIKE ? OR description LIKE ? OR category LIKE ? OR manufacturer LIKE ?";
 		
 		try {
 			psmt = con.prepareStatement(sql);
@@ -62,6 +62,7 @@ public class ProductRepository extends JDBConnection {
 			psmt.setString(1, skeyword);
 			psmt.setString(2, skeyword);
 			psmt.setString(3, skeyword);
+			psmt.setString(4, skeyword);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				Product pro = new Product();
@@ -127,7 +128,7 @@ public class ProductRepository extends JDBConnection {
 	public int insert(Product product) {
 		int result = 0;
 		
-		String sql = " INSER INTO product VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO product (product_id, name, unit_price, description, manufacturer, category, units_in_stock, condition, file, quantity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try {
 			psmt = con.prepareStatement(sql);

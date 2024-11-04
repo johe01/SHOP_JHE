@@ -11,9 +11,22 @@
 	
 	OrderRepository orderDAO = new OrderRepository();
 	List<Product> orderList = orderDAO.list(phone, orderPw);
+	System.out.println(orderList);
 	
-	session.setAttribute("orderList", orderList);
+	if(orderList != null){
+		session.setAttribute("orderPhone", phone);
+		session.setAttribute("orderList", orderList);		
+		response.sendRedirect(root + "/user/order.jsp");
+	} else {
+%>
+		<!-- 알림창을 표시하고 이전 페이지로 돌아가는 JavaScript -->
+		<script>
+			alert("일치하는 값이 없습니다.");
+			history.back();
+		</script>
+<%	
+	}
 	
-	response.sendRedirect(root + "/user/order.jsp");
+	
 	
 %>

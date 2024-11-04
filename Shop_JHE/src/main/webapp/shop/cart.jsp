@@ -130,14 +130,26 @@
 				</table>
 				<div class="d-flex justify-content-between mt-5 mb-5">
 					<a class="btn btn-danger" href="<%= root %>/shop/deleteCart.jsp" role="button">전체삭제</a>
-					<a class="btn btn-primary" href="<%= root %>/shop/ship.jsp" role="button">주문하기</a>
+					<a class="btn btn-primary" href="<%= root %>/shop/ship.jsp" role="button" onclick="return checkCartAndProceed();">주문하기</a>
 				</div>
 			</div>
 			
 			<jsp:include page="/layout/footer.jsp" />
 		</div>
 	</div>
+	<script type="text/javascript">
+        // JavaScript로 cartList가 비었는지 여부를 변수에 저장
+        var isCartEmpty = <%= cartList.isEmpty() ? "true" : "false" %>;
 
+        // 주문하기 버튼 클릭 시 이벤트 처리
+        function checkCartAndProceed() {
+            if (isCartEmpty) {
+                alert("장바구니에 담긴 상품이 없습니다.");
+                return false; // 이동을 막음
+            }
+            return true; // 이동 허용
+        }
+    </script>
 	<jsp:include page="/layout/script.jsp" />
 
 </body>

@@ -23,9 +23,7 @@ ProductRepository productDAO = new ProductRepository();
 
 	</div>
 	<div class="container shop m-auto mb-5">
-		<form action="order.jsp" name="shipForm" method="post"
-			enctype="multipart/form-data">
-
+		<form action="order.jsp" name="shipForm" method="post">
 			<div class="input-group mb-3 row">
 				<label class="input-group-text col-md-2" id="">성명</label> <input
 					type="text" class="form-control col-md-10" name="name">
